@@ -33,6 +33,7 @@ class MainScreenState extends State<MainScreen> with SingleTickerProviderStateMi
   bool get extendBody => true;
 
   static double get bottomNavigationBarBorderRadius => 30.0;
+  static const double bottomNavigationBarHeight = 50.0;
 
 
   @override

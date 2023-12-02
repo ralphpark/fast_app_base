@@ -1,7 +1,7 @@
 import 'package:fast_app_base/common/common.dart';
 enum NotificationType {
-  tossPay('토스페이', 'assets/image/notification/notification_toss.png'),
-  luck('행운복권', 'assets/image/notification/notification_luck.png'),
+  tossPay('토스페이', "assets/image/notification/notification_toss.png"),
+  luck('행운복권', "assets/image/notification/notification_luck.png"),
   people('토스공동구매', 'assets/image/notification/notification_people.png'),
   stock('토스증권 컨텐츠', 'assets/image/notification/notification_stock.png'),
   walk('만보기', 'assets/image/notification/notification_walk.png'),

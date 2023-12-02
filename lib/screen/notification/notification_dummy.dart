@@ -23,6 +23,7 @@ final notificationDummies = <TossNotification>[
     NotificationType.stock,
     '토스증권 컨텐츠를 확인해보세요!',
     DateTime.now().subtract(8.hours),
+    isRead: true,
   ),
   TossNotification(
     NotificationType.luck,

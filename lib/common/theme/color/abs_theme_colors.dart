@@ -46,9 +46,13 @@ abstract class AbstractThemeColors {
 
   Color get blueButtonBackground => AppColors.darkBlue;
 
-  get appBarBackground => Color.fromARGB(255, 16, 16, 18);
+  Color get appBarBackground => const Color.fromARGB(255, 16, 16, 18);
 
-  get buttonBackground => Color.fromARGB(255, 48, 48, 48);
+  Color get buttonBackground => const Color.fromARGB(255, 48, 48, 48);
 
-  get roundedLayoutBackground => Color.fromARGB(255, 24, 24, 24);
+  Color get roundedLayoutBackground => const Color.fromARGB(255, 24, 24, 24);
+
+  Color get unreadColor => const Color.fromARGB(255, 48, 48, 48);
+
+  Color get lessImportantText => AppColors.grey;
 }

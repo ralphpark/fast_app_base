@@ -2,8 +2,8 @@ import 'package:fast_app_base/screen/notification/vo/notification_type.dart';
 
 class TossNotification {
   final NotificationType type;
-  final String title;
-  final DateTime date;
+  final String description;
+  final DateTime time;
   bool isRead;
-  TossNotification(this.type, this.title, this.date, {this.isRead = false});
+  TossNotification(this.type, this.description, this.time, {this.isRead = false});
 }

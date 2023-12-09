@@ -19,15 +19,20 @@ class _OpensourceScreenState extends State<OpensourceScreen> {
 
   @override
   void initState() {
-    initData();
     super.initState();
+    initData();
   }
 
-  void initData() async {
-    final list = await LocalJson.getObjectList<Package>("json/licenses.json");
-    setState(() {
-      packageList = list;
-    });
+  Future<void> initData() async {
+    try {
+      final list = await LocalJson.getObjectList<Package> ("json/licenses.json");
+      setState(() {
+        packageList = list;
+      });
+    } catch (e) {
+      // 오류 처리: 콘솔에 오류 출력하거나 사용자에게 메시지 표시
+      print('Error loading data: $e');
+    }
   }
 
   @override

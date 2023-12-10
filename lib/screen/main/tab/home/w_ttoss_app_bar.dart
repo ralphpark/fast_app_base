@@ -12,8 +12,8 @@ class TtossAppBar extends StatefulWidget {
 }
 
 class _TtossAppBarState extends State<TtossAppBar> {
-
   bool _showRedDot = false;
+  int _tappingCount = 0;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -22,9 +22,21 @@ class _TtossAppBarState extends State<TtossAppBar> {
       child: Row(
         children: [
           width10,
-          Image.asset("assets/image/icon/toss.png", height: 30),
+          AnimatedContainer(
+              duration: NumDurationExtension(1000).ms,
+              color: Colors.red,
+              curve: Curves.easeIn,
+              height: _tappingCount > 2? 60:30,
+              child: Image.asset("assets/image/icon/toss.png", )),
           emptyExpanded,
-          Image.asset("assets/image/icon/map_point.png", height: 30),
+          Tap(
+              onTap: () {
+                setState(() {
+                  _tappingCount++;
+                  _showRedDot = _tappingCount % 2 == 0;
+                });
+              },
+              child: Image.asset("assets/image/icon/map_point.png", height: 30)),
           width10,
 
           Tap(

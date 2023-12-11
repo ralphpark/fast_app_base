@@ -47,12 +47,6 @@ class _AnimatedAppBarState extends State<AnimatedAppBar> {
       color: context.backgroundColor,
       child: SafeArea(
         child: Stack(children: [
-          Tap(
-            onTap:(){
-              Nav.pop(context);
-            },
-            child: Arrow(direction:AxisDirection.left),
-          ).p20(),
           AnimatedContainer(
               duration: duration,
               padding: EdgeInsets.only(left: getValue(20, 50), top: getValue(50, 15)),
@@ -63,6 +57,29 @@ class _AnimatedAppBarState extends State<AnimatedAppBar> {
                 child: widget.title.text.make(),
               )
           ),
+          Tap(
+            onTap:(){
+              Nav.pop(context);
+            },
+            child: Arrow(direction:AxisDirection.left),
+          ).p20(),
+          Positioned.fill(
+            child: Align(
+              alignment: Alignment.topRight,
+              child: TweenAnimationBuilder<Color?>(
+                duration: 1000.ms,
+                tween: ColorTween(begin: Colors.green, end: isTriggered? Colors.orange: Colors.green),
+                builder: (context, value, child) =>
+                    Image.asset(
+                      "assets/image/icon/notification.png",
+                      height: 60,
+                      color: value,
+                      colorBlendMode: BlendMode.modulate,
+                    )
+
+              ),
+            ),
+        ),
         ],),
       ),
     );

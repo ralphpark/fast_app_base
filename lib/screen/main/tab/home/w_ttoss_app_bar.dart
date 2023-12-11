@@ -24,7 +24,6 @@ class _TtossAppBarState extends State<TtossAppBar> {
           width10,
           AnimatedContainer(
               duration: NumDurationExtension(1000).ms,
-              color: Colors.red,
               curve: Curves.easeIn,
               height: _tappingCount > 2? 60:30,
               child: Image.asset("assets/image/icon/toss.png", )),

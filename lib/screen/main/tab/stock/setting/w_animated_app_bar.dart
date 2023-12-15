@@ -7,21 +7,31 @@ import '../../../../../common/widget/w_arrow.dart';
 
 class AnimatedAppBar extends StatefulWidget {
   final String title;
-  final ScrollController controller;
-  const AnimatedAppBar(this.title,{super.key, required this.controller});
+  final ScrollController scrollcontroller;
+  final AnimationController animationController;
+  const AnimatedAppBar(this.title,{super.key, required this.scrollcontroller, required this.animationController});
 
   @override
   State<AnimatedAppBar> createState() => _AnimatedAppBarState();
 }
 
-class _AnimatedAppBarState extends State<AnimatedAppBar> {
+class _AnimatedAppBarState extends State<AnimatedAppBar>  {
   Duration get duration => 0.01.seconds;
   double scrollPosition = 0;
+  // late Animation animation = ColorTween(begin:Colors.cyan, end:Colors.red, ).animate(controller);
+  late CurvedAnimation animation = CurvedAnimation(parent: widget.animationController, curve: Curves.bounceInOut);
+
+
   @override
   void initState() {
-    widget.controller.addListener(() {
+    widget.scrollcontroller.addListener(() {
       setState(() {
-        scrollPosition = widget.controller.position.pixels;
+      });
+    });
+
+    widget.scrollcontroller.addListener(() {
+      setState(() {
+        scrollPosition = widget.scrollcontroller.position.pixels;
       });
     });
     super.initState();
@@ -63,23 +73,21 @@ class _AnimatedAppBarState extends State<AnimatedAppBar> {
             },
             child: Arrow(direction:AxisDirection.left),
           ).p20(),
-          Positioned.fill(
-            child: Align(
-              alignment: Alignment.topRight,
-              child: TweenAnimationBuilder<Color?>(
-                duration: 1000.ms,
-                tween: ColorTween(begin: Colors.green, end: isTriggered? Colors.orange: Colors.green),
-                builder: (context, value, child) =>
-                    Image.asset(
-                      "assets/image/icon/notification.png",
-                      height: 60,
-                      color: value,
-                      colorBlendMode: BlendMode.modulate,
-                    )
+          Positioned(
+            left: animation.value *200,
+            child: TweenAnimationBuilder<Color?>(
+              duration: 1000.ms,
+              tween: ColorTween(begin: Colors.green, end: isTriggered? Colors.orange: Colors.green),
+              builder: (context, value, child) =>
+                  Image.asset(
+                    "assets/image/icon/map_point.png",
+                    height: 60,
+                    color: value,
+                    colorBlendMode: BlendMode.modulate,
+                  )
 
-              ),
             ),
-        ),
+          ),
         ],),
       ),
     );

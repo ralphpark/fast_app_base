@@ -2,6 +2,7 @@
 class Assets {
   Assets._();
 
+  static const String assetsJsonLicenses = 'assets/json/licenses.json';
   static const String bankBankInvestment = 'assets/image/bank/bank_investment.png';
   static const String bankBankKakao = 'assets/image/bank/bank_kakao.png';
   static const String bankBankShinhan = 'assets/image/bank/bank_shinhan.png';
@@ -38,6 +39,9 @@ class Assets {
   static const String notificationNotificationStock = 'assets/image/notification/notification_stock.png';
   static const String notificationNotificationToss = 'assets/image/notification/notification_toss.png';
   static const String notificationNotificationWalk = 'assets/image/notification/notification_walk.png';
+  static const String riveLightLike = 'assets/rive/light_like.riv';
+  static const String riveLightLike2 = 'assets/rive/light_like2.riv';
+  static const String riveLoginScreenBear = 'assets/rive/login_screen_bear.riv';
   static const String splashAndroid12 = 'assets/image/splash/android12.png';
   static const String splashSplash = 'assets/image/splash/splash.png';
   static const String stockInterestStock01 = 'assets/image/stock/interest_stock_01.png';

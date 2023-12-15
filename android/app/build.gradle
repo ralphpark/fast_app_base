@@ -52,6 +52,8 @@ android {
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
+    // NDK 버전을 추가합니다.
+    ndkVersion "25.1.8937393"
 
     buildTypes {
         release {

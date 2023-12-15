@@ -18,8 +18,9 @@ class SettingsScreen extends StatefulWidget {
   State<SettingsScreen> createState() => _SettingsScreenState();
 }
 
-class _SettingsScreenState extends State<SettingsScreen> {
+class _SettingsScreenState extends State<SettingsScreen> with SingleTickerProviderStateMixin {
   final scrollController = ScrollController();
+  late AnimationController animationController = AnimationController(vsync: this, duration: 0.2.seconds);
   bool isPushOn = false;
 
   @override
@@ -47,6 +48,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 Slider(
                     value: Prefs.sliderPosition.get(),
                     onChanged: (value) {
+                      animationController.animateTo(value, duration: 0.seconds);
                       Prefs.sliderPosition.set(value);
                     })),
             Obx(
@@ -74,16 +76,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
               Nav.push(OpensourceScreen());
               },
             ),
-              BigButton('오픈소스 화면', onTap: () async{
-                Nav.push(OpensourceScreen());
+              BigButton('애니메이션 forward', onTap: () async{
+                animationController.forward();
               },
               ),
-              BigButton('오픈소스 화면', onTap: () async{
-                Nav.push(OpensourceScreen());
+              BigButton('애니메이션 reverse', onTap: () async{
+                animationController.reverse();
               },
               ),
-              BigButton('오픈소스 화면', onTap: () async{
-                Nav.push(OpensourceScreen());
+              BigButton('애니메이션 repeat', onTap: () async{
+                animationController.repeat();
               },
               ),
               BigButton('오픈소스 화면', onTap: () async{
@@ -134,7 +136,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
           AnimatedAppBar(
             '설정',
-            controller: scrollController,
+             scrollcontroller: scrollController, animationController: animationController,
           ),
         ],
       ),

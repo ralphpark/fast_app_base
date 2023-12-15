@@ -5,7 +5,9 @@ import 'package:fast_app_base/common/widget/w_round_button.dart';
 import 'package:fast_app_base/common/widget/w_rounded_container.dart';
 import 'package:fast_app_base/screen/dialog/d_message.dart';
 import 'package:fast_app_base/screen/main/s_main.dart';
+import 'package:fast_app_base/screen/main/stream_test.dart';
 import 'package:fast_app_base/screen/main/tab/home/bank_account_dummy.dart';
+import 'package:fast_app_base/screen/main/tab/home/w_rive_like_button.dart';
 import 'package:fast_app_base/screen/main/tab/home/w_ttoss_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -15,13 +17,29 @@ import 'package:live_background/widget/live_background_widget.dart';
 import '../../../../common/widget/w_big_button.dart';
 import '../../../dialog/d_color_bottom.dart';
 import '../../../dialog/d_confirm.dart';
+import 's_number.dart';
 import 'w_bank_account.dart';
 
-class HomeFragment extends StatelessWidget {
+class HomeFragment extends StatefulWidget {
   const HomeFragment({
     Key? key,
   }) : super(key: key);
 
+  @override
+  State<HomeFragment> createState() => _HomeFragmentState();
+}
+
+class _HomeFragmentState extends State<HomeFragment> {
+  int count = 0;
+  @override
+  void initState(){
+    countStream(5).listen((event) {
+      setState(() {
+        count = event;
+      });
+    });
+  }
+  bool isLiked = false;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -39,13 +57,43 @@ class HomeFragment extends StatelessWidget {
             onRefresh: () async{
               await sleepAsync(NumDurationExtension(500).ms);
             },
+
             child: SingleChildScrollView(
               padding: const EdgeInsets.only(
                   top: TtossAppBar.appBarHeight,
                   bottom: MainScreenState.bottomNavigationBarHeight),
               child : Column(children: [
-              BigButton('토스뱅크', onTap: () {
-                    context.showSnackbar('토스뱅크를 눌렀어요.');
+                SizedBox(
+                  height: 250,
+                  width: 250,
+                    child:
+                    RiveLiveButton(isLiked, onTapLike: (isLike) {
+                      setState(() {
+                        this.isLiked = isLike;
+                      });
+                    })),
+                StreamBuilder(
+                  builder : (context,snapshot,){
+                  final count = snapshot.data;
+                  switch (snapshot.connectionState){
+                    case ConnectionState.none:
+                      return const CircularProgressIndicator();
+                    case ConnectionState.waiting:
+                      return 'waiting'.text.make();
+                    case ConnectionState.active:
+                      return count!.text.size(30).bold.make();
+                    case ConnectionState.done:
+                      return 'done'.text.make();
+                  }
+                  },
+                  stream: countStream(5),
+                ),
+                BigButton('토스뱅크',
+                    onTap: () async {
+                      print('start');
+                      final result = await Nav.push(NumberScreen());
+                      print(result);
+                      print('end');
                   }),
                   height10,
                   RoundedContainer(
@@ -58,8 +106,8 @@ class HomeFragment extends StatelessWidget {
                           ...bankAccounts
                               .map((e) => BankAccountWidget(e)).toList(),
                   ],))
-                ],
-              ).pSymmetric(h: 20).animate().slideY(duration: NumDurationExtensions(4000).ms).fadeIn(),
+                ],),
+              // ).pSymmetric(h: 20).animate().slideY(duration: NumDurationExtensions(4000).ms).fadeIn(),
             ),
           ),
           TtossAppBar(),
@@ -67,7 +115,13 @@ class HomeFragment extends StatelessWidget {
       ),
     );
   }
-
+  Stream<int> countStream(int max) async*{ // async* : Stream을 반환하는 함수
+    await sleepAsync(2.seconds);
+    for(int i = 0; i < max; i++){
+      await sleepAsync(4.seconds);
+      yield i; // yield : Stream에 값을 전달하는 키워드
+    }
+  }
   void showSnackbar(BuildContext context) {
     context.showSnackbar('snackbar 입니다.',
         extraButton: Tap(
@@ -111,4 +165,7 @@ class HomeFragment extends StatelessWidget {
   void openDrawer(BuildContext context) {
     Scaffold.of(context).openDrawer();
   }
+}
+Future sleepAsync(Duration duration)  {
+  return Future.delayed(duration);
 }
